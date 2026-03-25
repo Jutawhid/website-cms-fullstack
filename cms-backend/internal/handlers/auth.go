@@ -69,7 +69,7 @@ func Login(db *gorm.DB) gin.HandlerFunc {
 func Me(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 1. Extract the User ID from the JWT token (which was validated by the AuthMiddleware)
-		userID, _ := c.Get("user_id")
+		userID, _ := c.Get("userID") // Fixed Context Key to match the Middleware!
 		var user models.User
 		if err := db.Where("id = ?", userID).First(&user).Error; err != nil {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
