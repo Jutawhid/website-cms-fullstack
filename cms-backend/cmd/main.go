@@ -39,6 +39,7 @@ func main() {
 		{
 			auth.POST("/login", handlers.Login(db))
 			auth.POST("/register", handlers.Register(db)) // Brand new endpoint to spawn users!
+			auth.POST("/refresh", handlers.Refresh(db))   // Resolving refresh loops
 		}
 
 		// Protected routes

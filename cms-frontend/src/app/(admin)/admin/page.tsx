@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<{ id: string, role: string } | null>(null);
   const [error, setError] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     // Attempt to hit the protected Golang endpoint using our global Axios interceptor token!
@@ -14,12 +16,19 @@ export default function AdminDashboard() {
         setUser(res.data);
       } catch (err: any) {
         console.error("Auth Request Failed:", err);
-        setError("Unauthorized to view dashboard.");
+        setError("Unauthorized. Redirecting to login...");
+        
+        // 1. Wipe invalid tokens from the browser
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_role');
+        
+        // 2. Redirect mathematically to the login page immediately
+        router.push('/login');
       }
     };
     
     fetchUserAndVerifyAuth();
-  }, []);
+  }, [router]);
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100">

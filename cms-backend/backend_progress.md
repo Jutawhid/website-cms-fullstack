@@ -8,7 +8,8 @@
 | **Phase 2** | Authentication | Password hashing using `bcrypt` | ✅ Completed |
 | | Authentication | JWT token generation (`access`, `refresh`) | ✅ Completed |
 | | Authentication | Middleware to protect routes (`AuthMiddleware`) | ✅ Completed |
-| | Authentication | Login handler and API routing | ✅ Completed |
+| | Authentication | Login AND **Register** handler / API routing | ✅ Completed |
+| | Authentication | **Refresh Token rotation endpoint** | ✅ Completed |
 | **Phase 3** | Pages API | CRUD operations for CMS pages | ✅ Completed |
 | | Pages API | Relational querying (Author -> Page) | ✅ Completed |
 | **Phase 4** | Media Center | Upload images/files logic | ⏳ Pending |

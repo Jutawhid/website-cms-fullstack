@@ -15,9 +15,10 @@ export default function LoginPage() {
         
         try {
             const response = await api.post('/api/v1/auth/login', { email, password });
-            const { access_token, user } = response.data;
+            const { access_token, refresh_token, user } = response.data;
             
             localStorage.setItem('access_token', access_token);
+            localStorage.setItem('refresh_token', refresh_token);
             localStorage.setItem('user_role', user.role);
             
             router.push('/admin');
