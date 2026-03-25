@@ -10,8 +10,9 @@
 | | Auth UI | State management & secure token storage | ✅ Completed |
 | **Phase 3** | Admin UI | Dashboard layout and sidebar | ✅ Completed |
 | | Admin UI | Dashboard user verification UI | ✅ Completed |
-| | Admin UI | Data table to list CMS Pages | ⏳ Pending |
-| | Admin UI | Interactive Editor for content creation | ⏳ Pending |
+| | Admin UI | Data table to list CMS Pages | ✅ Completed |
+| | Admin UI | Interactive Editor for content creation | ✅ Completed |
+| | Admin UI | **Full CMS PUT/Update Pipeline logic** | ✅ Completed |
 
 **Status Key:**
 ✅ Completed | 🔄 In Progress | ⏳ Pending

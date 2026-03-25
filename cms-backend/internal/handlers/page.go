@@ -82,3 +82,48 @@ func DeletePage(db *gorm.DB) gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"message": "Page successfully deleted"})
 	}
 }
+
+// GetPage mathematically fetches a single page by its UUID (Read)
+func GetPage(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		var page models.Page
+		if err := db.Where("id = ?", id).First(&page).Error; err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Page strictly not found"})
+			return
+		}
+		c.JSON(http.StatusOK, page)
+	}
+}
+
+// UpdatePage safely modifies an existing HTML page (Update)
+func UpdatePage(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		
+		var req CreatePageRequest // We purposefully reuse the strict Create validation blueprint!
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		var page models.Page
+		if err := db.Where("id = ?", id).First(&page).Error; err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Page utterly destroyed or missing"})
+			return
+		}
+
+		// Update fields in memory intelligently
+		page.Title = req.Title
+		page.Slug = req.Slug
+		page.Content = req.Content
+		page.Status = req.Status
+
+		if err := db.Save(&page).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed mathematically to update postgres"})
+			return
+		}
+
+		c.JSON(http.StatusOK, page)
+	}
+}

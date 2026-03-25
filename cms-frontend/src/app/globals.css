@@ -24,3 +24,8 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Force all input fields to securely use dark text, preventing invisible text in OS Dark Mode! */
+input, textarea, select {
+  color: #111827 !important; /* Tailwind gray-900 */
+}

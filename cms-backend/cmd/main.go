@@ -52,6 +52,8 @@ func main() {
 			// Pages API Endpoints (Phase 3)
 			protected.POST("/pages", handlers.CreatePage(db))
 			protected.GET("/pages", handlers.GetPages(db))
+			protected.GET("/pages/:id", handlers.GetPage(db))
+			protected.PUT("/pages/:id", handlers.UpdatePage(db))
 			protected.DELETE("/pages/:id", handlers.DeletePage(db))
 		}
 	}
