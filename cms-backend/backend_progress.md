@@ -1,3 +1,7 @@
+# Run Backend
+$ fuser -k 8080/tcp || true && cd "/home/technonext/Documents/learning Hub/go-project-v2/cms-backend" && $(go env GOPATH)/bin/air
+
+
 # 🚀 Backend Progress Tracker (Go + Gin)
 
 | Phase | Module | Tasks | Status |
