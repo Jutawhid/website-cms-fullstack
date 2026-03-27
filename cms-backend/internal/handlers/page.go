@@ -8,6 +8,7 @@ import (
 	"gorm.io/gorm"
 
 	"cms-backend/internal/models"
+	"cms-backend/pkg/utils"
 )
 
 // CreatePageRequest is our blueprint for exactly what data a user must send to create a new page
@@ -56,16 +57,20 @@ func CreatePage(db *gorm.DB) gin.HandlerFunc {
 	}
 }
 
-// GetPages fetches all pages (with author info)
+// GetPages fetches paginated pages dynamically (with author info)
 func GetPages(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var pages []models.Page
-		// Preload("Author") tells GORM to automatically fetch the User associated with AuthorID
-		if err := db.Preload("Author").Find(&pages).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch pages"})
+		
+		// 💡 MENTOR TIP: We pipe the DB connection cleanly through our new generic Utility Function!
+		response, err := utils.Paginate(c, db, &models.Page{}, &pages, []string{"Author"})
+		
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed mathematically to fetch paginated pages"})
 			return
 		}
-		c.JSON(http.StatusOK, pages)
+		
+		c.JSON(http.StatusOK, response)
 	}
 }
 
